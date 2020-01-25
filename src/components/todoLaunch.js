@@ -1,10 +1,9 @@
 import React from 'react';
-import '../styles/todos/todos.scss'
+import './todoLaunch.scss'
 
 function TodoLaunch(props) {
 
     const greeting = 'Hello in my Todo Application!';
-
     return <div className='app'>{greeting}</div>;
 }
 
