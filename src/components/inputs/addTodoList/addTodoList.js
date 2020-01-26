@@ -1,8 +1,15 @@
-import React from 'react';
+import React from "react";
+import './addTodoList.scss'
 
-function AddTodoList(props) {
-    const greeting = 'Hello Function Component!';
-    return <h1>{greeting}</h1>;
+export default function InsertTodoList(props) {
+
+  return (
+    <div className='todoListInput'>
+      <span>Type in a name for your Todo-List:</span>
+      <input type="text" placeholder="todo-list name"></input>
+      <button>Create!</button>
+    </div>
+  );
 }
 
-export default AddTodoList;
+// export default AddTodoList;

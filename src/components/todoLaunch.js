@@ -1,10 +1,15 @@
-import React from 'react';
-import './todoLaunch.scss'
+import React from "react";
+import InsertTodoList from "./inputs/addTodoList/addTodoList";
+import "./todoLaunch.scss";
 
-function TodoLaunch(props) {
-
-    const greeting = 'Hello in my Todo Application!';
-    return <div className='app'>{greeting}</div>;
+function TodoLaunch() {
+  const greeting = "Welcome to my Todo-List Application!";
+  return (
+    <React.Fragment>
+      <div className="app">{greeting}</div>
+      <InsertTodoList />
+    </React.Fragment>
+  );
 }
 
 export default TodoLaunch;
