@@ -9,7 +9,7 @@ function reducer(state = initialState, action) {
     switch(action.type) {
         case 'CREATE_TODO-LIST':
           return {
-            count: state.count + 1
+            todoLists: [...state.todoLists, {title: action.title, id: (state.todoLists.length + 1), todos: []}]
           };
         case 'DELETE_TODO-LIST':
           return {

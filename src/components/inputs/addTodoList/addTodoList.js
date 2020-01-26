@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import './addTodoList.scss';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import "./addTodoList.scss";
 
 function mapStateToProps(state) {
   return {
@@ -8,13 +8,23 @@ function mapStateToProps(state) {
   };
 }
 
-  function InsertTodoList(props) {
-  const [name, setName] = useState('');
+function InsertTodoList(props) {
+  const [name, setName] = useState("");
   return (
-    <div className='todoListInput'>
+    <div className="todoListInput">
       <span>Type in a name for your Todo-List:</span>
-      <input type="text" placeholder="todo-list name" onChange={(e) => setName(e.target.value)}></input>
-    <button >Add!</button>
+      <input
+        type="text"
+        placeholder="todo-list name"
+        onChange={e => setName(e.target.value)}
+      ></input>
+      <button
+        onClick={() => {
+          props.dispatch({ type: "CREATE_TODO-LIST", title: name });
+        }}
+      >
+        Add!
+      </button>
     </div>
   );
 }
