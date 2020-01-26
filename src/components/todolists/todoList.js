@@ -14,8 +14,8 @@ function TodoList(props) {
   return (
     <div className='TodoList'>
       <span>{props.title}</span>
-      <input placeholder='Add your Todo' type='text'></input><button>Add Todo</button>
-      <button onClick={e => {props.dispatch({ type: "DELETE_TODO-LIST", id: props.id })}}>Delete</button>
+      <input onChange={e => {setTodo(e.target.value)}} placeholder='Add your Todo' type='text'></input><button onClick={() => {props.dispatch({ type: "ADD_TODO", id: props.id, title: todo })}}>Add Todo</button>
+      <button onClick={() => {props.dispatch({ type: "DELETE_TODO-LIST", id: props.id })}}>Delete</button>
       <ul className="tasks">
         {props.items.map(item => (
           <li key={item.id}>

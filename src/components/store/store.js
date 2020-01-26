@@ -13,11 +13,14 @@ function reducer(state = initialState, action) {
           };
         case 'DELETE_TODO-LIST':
           return {
-            count: state.count - 1
+            todoLists: state.todoLists.filter(item => {item.id !== action.id})
           };
-        case 'RESET':
+        case 'ADD_TODO':
           return {
-            count: 0
+            todoLists:  todoLists.map(item, i => {
+                if ((action.id - 1) === i) {return item.todos.concat({title: action.title, id: item.todos + 1, done: false})}
+                else {return item} 
+            })  
           };
         default:
           return state;
