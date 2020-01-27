@@ -1,5 +1,6 @@
 import React from "react";
 import InsertTodoList from "./inputs/addTodoList/addTodoList";
+import GenerateTodoLists from './todolists/generateTodolists';
 import "./todoLaunch.scss";
 
 function TodoLaunch() {
@@ -8,6 +9,9 @@ function TodoLaunch() {
     <React.Fragment>
       <div className="app">{greeting}</div>
       <InsertTodoList />
+      <div className='allTodoLists'>
+        <GenerateTodoLists/>
+      </div>
     </React.Fragment>
   );
 }

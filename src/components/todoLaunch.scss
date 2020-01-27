@@ -8,3 +8,8 @@
    align-items: center;
    font-weight: bold;
 }
+
+.allTodoLists {
+   display: flex;
+   flex-wrap: wrap;
+}

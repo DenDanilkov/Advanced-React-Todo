@@ -43,7 +43,7 @@ function TodoList(props) {
               className="delete"
             ></button>
             <button
-              onClick={() => {props.dispatch({ type: "DONE_TODO", id: props.id, todo_id: item.id})}}
+              onClick={() => {props.dispatch({ type: "DONE_TODO", id: props.id, todo_id: item.id })}}
               className="checked"
             ></button>
           </li>
