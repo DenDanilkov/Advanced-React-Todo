@@ -38,10 +38,12 @@ function TodoList(props) {
       </button>
       <ul className="tasks">
         {props.todoLists.reduce((acc,item) => {
-         if (item.id === props.id) {return acc.concat(item.todos)}
+         if (item.id === props.id) {
+          acc.push(...item.todos)
+          return acc;
+        }
          else {return acc}
-        },[]).map(item => {
-          <li key={item.id}>
+        },[]).map(item => { return <li key={item.id}>
           {item.title}
           <button
             onClick={() => {

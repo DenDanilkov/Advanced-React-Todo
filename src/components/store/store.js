@@ -26,11 +26,12 @@ function reducer(state = initialState, action) {
         todoLists: state.todoLists.map((item, i) => {
           console.log('Заходит ли сюда?')
           if (action.id === item.id) {
-            item.todos.push({
-              title: action.title,
-              id: Date.now(),
-              done: false
-            });
+            return {title: item.title, id: item.id, todos: [...item.todos, {title: action.title, id: Date.now(), done: false}] }
+            // item.todos.push({
+            //   title: action.title,
+            //   id: Date.now(),
+            //   done: false
+            // });
           } else {
             return item;
           }
@@ -40,11 +41,11 @@ function reducer(state = initialState, action) {
       return {
         todoLists: state.todoLists.map((item, i) => {
           if (action.id - 1 === i) {
-            return ({
+            return {
               title: item.title,
               id: item.id,
               todos: item.todos.filter((member, i) => i !== action.todo_id - 1)
-            });
+            }
           } else {
             return item;
           }

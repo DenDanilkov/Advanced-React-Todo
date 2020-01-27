@@ -1,74 +1,74 @@
-.tasks li {
-    position: relative;
-    padding: 18px 20px;
-    margin-bottom: 32px;
-    font-size: 16px;
-    color: #000;
-    border-bottom: 1px solid #C1C1C1;
-  }
-  .tasks li .checked {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    right: 14px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: rgb(15, 131, 92);
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .tasks li .checked:before {
-    content: '';
-    transform: rotate(-45deg);
-    width: 12px;
-    height: 6px;
-    border-left: 1px solid #fff;
-    border-bottom: 1px solid #fff;
-    margin-top: -4px;
-  }
-  .tasks li .checked:hover {
-    background: rgb(15, 131, 92);
-  }
-  .tasks li .delete {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 52px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: rgb(172, 26, 26);
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .tasks li .delete:before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 11px;
-    transform: rotate(-45deg);
-    width: 2px;
-    height: 16px;
-    background: #fff;
-  }
-  .tasks li .delete:after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 11px;
-    transform: rotate(45deg);
-    width: 2px;
-    height: 16px;
-    background: #fff;
-  }
-  .tasks li .delete:hover {
-    background: rgb(172, 26, 26);
-  }
+// .tasks li {
+//     position: relative;
+//     padding: 18px 20px;
+//     margin-bottom: 32px;
+//     font-size: 16px;
+//     color: #000;
+//     border-bottom: 1px solid #C1C1C1;
+//   }
+//   .tasks li .checked {
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     display: flex;
+//     flex-wrap: wrap;
+//     align-items: center;
+//     justify-content: center;
+//     right: 14px;
+//     width: 24px;
+//     height: 24px;
+//     border-radius: 50%;
+//     background: rgb(15, 131, 92);
+//     cursor: pointer;
+//     transition: 0.3s;
+//   }
+//   .tasks li .checked:before {
+//     content: '';
+//     transform: rotate(-45deg);
+//     width: 12px;
+//     height: 6px;
+//     border-left: 1px solid #fff;
+//     border-bottom: 1px solid #fff;
+//     margin-top: -4px;
+//   }
+//   .tasks li .checked:hover {
+//     background: rgb(15, 131, 92);
+//   }
+//   .tasks li .delete {
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     right: 52px;
+//     width: 24px;
+//     height: 24px;
+//     border-radius: 50%;
+//     background: rgb(172, 26, 26);
+//     cursor: pointer;
+//     transition: 0.3s;
+//   }
+//   .tasks li .delete:before {
+//     content: '';
+//     position: absolute;
+//     top: 4px;
+//     left: 11px;
+//     transform: rotate(-45deg);
+//     width: 2px;
+//     height: 16px;
+//     background: #fff;
+//   }
+//   .tasks li .delete:after {
+//     content: '';
+//     position: absolute;
+//     top: 4px;
+//     left: 11px;
+//     transform: rotate(45deg);
+//     width: 2px;
+//     height: 16px;
+//     background: #fff;
+//   }
+//   .tasks li .delete:hover {
+//     background: rgb(172, 26, 26);
+//   }
 
   .TodoList {
       border: 1px solid blue;
