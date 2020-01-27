@@ -11,7 +11,7 @@ function mapStateToProps(state) {
 
 function GenerateTodoLists(props) {
   console.log('при генерации тудулиста', props)
-  return props.todoLists.map((item, i) => <TodoList id={i + 1} title={item.title} key={item.id} />)
+  return props.todoLists.map((item, i) => <TodoList id={item.id} title={item.title} key={item.id} />)
 }
 
 

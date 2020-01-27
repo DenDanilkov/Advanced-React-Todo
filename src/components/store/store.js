@@ -11,13 +11,14 @@ function reducer(state = initialState, action) {
       return {
         todoLists: [
           ...state.todoLists,
-          { title: action.title, id: state.todoLists.length + 1, todos: [] }
+          { title: action.title, id: (state.todoLists.length + 1), todos: [] }
         ]
       };
     case "DELETE_TODO-LIST":
       return {
         todoLists: state.todoLists.filter(item => {
-          item.id !== action.id;
+          console.log('delete todod id', action.id, item.id)
+          return item.id !== action.id;
         })
       };
     case "ADD_TODO":
