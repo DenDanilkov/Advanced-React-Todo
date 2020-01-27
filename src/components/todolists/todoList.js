@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import './todoList.scss'
+import "./todoList.scss";
 
 function mapStateToProps(state) {
   return {
@@ -9,6 +9,7 @@ function mapStateToProps(state) {
 }
 
 function TodoList(props) {
+  
   const [todo, setTodo] = useState("");
 
   return (
@@ -36,19 +37,33 @@ function TodoList(props) {
         Delete
       </button>
       <ul className="tasks">
-        {console.log('before insert todo', props.todoLists[props.id - 1])}
-        {props.todoLists[props.id - 1].todos.map((item) => {
+        {props.todoLists.reduce((acc,item) => {
+         if (item.id === props.id) {return acc.concat(item.todos)}
+         else {return acc}
+        },[]).map(item => {
           <li key={item.id}>
-            {item.title}
-            <button
-              onClick={() => { props.dispatch({ type: "DELETE_TODO", id: props.id, todo_id: item.id }) }}
-              className="delete"
-            ></button>
-            <button
-              onClick={() => { props.dispatch({ type: "DONE_TODO", id: props.id, todo_id: item.id }) }}
-              className="checked"
-            ></button>
-          </li>
+          {item.title}
+          <button
+            onClick={() => {
+              props.dispatch({
+                type: "DELETE_TODO",
+                id: props.id,
+                todo_id: item.id
+              });
+            }}
+            className="delete"
+          ></button>
+          <button
+            onClick={() => {
+              props.dispatch({
+                type: "DONE_TODO",
+                id: props.id,
+                todo_id: item.id
+              });
+            }}
+            className="checked"
+          ></button>
+        </li>;
         })}
       </ul>
     </div>

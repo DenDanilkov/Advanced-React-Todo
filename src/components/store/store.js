@@ -11,7 +11,7 @@ function reducer(state = initialState, action) {
       return {
         todoLists: [
           ...state.todoLists,
-          { title: action.title, id: (state.todoLists.length + 1), todos: [] }
+          { title: action.title, id: Date.now(), todos: [] }
         ]
       };
     case "DELETE_TODO-LIST":
@@ -25,10 +25,10 @@ function reducer(state = initialState, action) {
       return {
         todoLists: state.todoLists.map((item, i) => {
           console.log('Заходит ли сюда?')
-          if (action.id - 1 === i) {
+          if (action.id === item.id) {
             item.todos.push({
               title: action.title,
-              id: item.todos.length,
+              id: Date.now(),
               done: false
             });
           } else {
