@@ -23,10 +23,11 @@ function reducer(state = initialState, action) {
     case "ADD_TODO":
       return {
         todoLists: state.todoLists.map((item, i) => {
+          console.log('Заходит ли сюда?')
           if (action.id - 1 === i) {
-            return item.todos.concat({
+            item.todos.push({
               title: action.title,
-              id: item.todos + 1,
+              id: item.todos.length,
               done: false
             });
           } else {
@@ -51,16 +52,16 @@ function reducer(state = initialState, action) {
     case "DONE_TODO":
       return {
         todoLists: state.todoLists.map(item, i => {
-            if (action.id - 1 === i) {
-              return ({
-                title: item.title,
-                id: item.id,
-                todos: item.todos.map((member, i) => i === action.todo_id - 1 ? {title: member.title, id: member.id, done: !member.done} : member)
-              });
-            } else {
-              return item;
-            }
-          })
+          if (action.id - 1 === i) {
+            return ({
+              title: item.title,
+              id: item.id,
+              todos: item.todos.map((member, i) => i === action.todo_id - 1 ? { title: member.title, id: member.id, done: !member.done } : member)
+            });
+          } else {
+            return item;
+          }
+        })
       };
     default:
       return state;
