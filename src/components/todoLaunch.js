@@ -3,6 +3,7 @@ import InsertTodoList from "./inputs/addTodoList/addTodoList";
 import GenerateTodoLists from './todolists/generateTodolists';
 import "./todoLaunch.scss";
 
+
 function TodoLaunch() {
   const greeting = "Welcome to my Todo-List Application!";
   return (
@@ -10,7 +11,7 @@ function TodoLaunch() {
       <div className="app">{greeting}</div>
       <InsertTodoList />
       <div className='allTodoLists'>
-        <GenerateTodoLists/>
+        <GenerateTodoLists/>     
       </div>
     </React.Fragment>
   );
