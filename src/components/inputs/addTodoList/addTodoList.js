@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./addTodoList.scss";
+import {createTodoList} from '../../store/store'
 
-function mapStateToProps(state) {
-  return {
-    todoLists: state.todoLists
-  };
-}
-
-function InsertTodoList(props) {
+export default function InsertTodoList(props) {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   return (
     <div className="todoListInput">
@@ -20,7 +16,7 @@ function InsertTodoList(props) {
       ></input>
       <button
         onClick={() => {
-          props.dispatch({ type: "CREATE_TODO-LIST", title: name });
+         dispatch(createTodoList({ title: name }));
         }}
       >
         Add!
@@ -29,4 +25,3 @@ function InsertTodoList(props) {
   );
 }
 
-export default connect(mapStateToProps)(InsertTodoList);
