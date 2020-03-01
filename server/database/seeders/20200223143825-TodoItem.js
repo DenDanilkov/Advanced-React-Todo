@@ -3,11 +3,11 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('TodoItems', [{
-      title: 'First TodoList Denis',
+      title: 'First TodoItem Denis',
       done: false,
       createdAt: new Date(),
         updatedAt: new Date(),
-        user_id: 2
+        todoId: 1
     }]);
     /*
       Add altering commands here.

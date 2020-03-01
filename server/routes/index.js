@@ -4,7 +4,7 @@ var todoRouter = require('./todos')
 
 /* GET home page. */
 
-router.use('/todos', todoRouter);
+router.use('/todoLists', todoRouter);
 router.use('/', function(req, res, next) {
   res.send('Hello Denis!!!');
 });
