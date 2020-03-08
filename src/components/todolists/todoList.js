@@ -47,7 +47,7 @@ export default function TodoList(props) {
             {todos.todoLists
               .reduce((acc, item) => {
                 if (item.id === props.id) {
-                  acc.push(...item.todos);
+                  acc.push(...item.TodoItems);
                   return acc;
                 } else {
                   return acc;
