@@ -1,16 +1,16 @@
 import React from "react";
 import InsertTodoList from "./inputs/addTodoList/addTodoList";
 import GenerateTodoLists from './todolists/generateTodolists';
-import "./todoLaunch.scss";
+
 
 
 function TodoLaunch() {
   const greeting = "Welcome to my Todo-List Application!";
   return (
     <>
-      <div className="app">{greeting}</div>
+      <div className='row'> <h4 className='col m6 offset-m3'>{greeting}</h4></div>
       <InsertTodoList />
-      <div className='allTodoLists'>
+      <div className='row'>
         <GenerateTodoLists/>     
       </div>
     </>
