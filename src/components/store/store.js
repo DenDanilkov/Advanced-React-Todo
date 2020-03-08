@@ -3,7 +3,6 @@ import { createSlice, configureStore, getDefaultMiddleware } from '@reduxjs/tool
 import { logger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
-
 import {api} from '../../api/index'
 
 export const todosFeature = createSlice({

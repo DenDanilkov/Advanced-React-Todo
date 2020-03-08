@@ -6,7 +6,6 @@ export function apiFactory(http) {
     todos: todosApi(http),
   };
 }
-
 const http = httpClient('http://localhost:3000/');
 
 export const api = apiFactory(http);
