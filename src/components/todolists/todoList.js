@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  deleteTodoList,
+  deleteTodoListRequest,
   addTodoItem,
   deleteTodoItem,
   todoItemCompleted
@@ -33,7 +33,7 @@ export default function TodoList(props) {
               </button>
               <button className='btn-floating btn-small red offset-s7'
                 onClick={() => {
-                  dispatch(deleteTodoList({ id: props.id }));
+                  dispatch(deleteTodoListRequest({ id: props.id }));
                 }}
 
               >

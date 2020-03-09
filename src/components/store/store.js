@@ -1,16 +1,19 @@
-
-import { createSlice, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { takeEvery, put, call } from 'redux-saga/effects';
-import { logger } from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
-import { all } from 'redux-saga/effects';
-import { api } from '../../api/index'
+import {
+  createSlice,
+  configureStore,
+  getDefaultMiddleware
+} from "@reduxjs/toolkit";
+import { takeEvery, put, call } from "redux-saga/effects";
+import { logger } from "redux-logger";
+import createSagaMiddleware from "redux-saga";
+import { all } from "redux-saga/effects";
+import { api } from "../../api/index";
 
 export const todosFeature = createSlice({
-  name: 'todos',
+  name: "todos",
   initialState: {
     loading: false,
-    title: 'Welcome to my Todo App!!!',
+    title: "Welcome to my Todo App!!!",
     todoLists: []
   },
   reducers: {
@@ -19,15 +22,15 @@ export const todosFeature = createSlice({
       // return {
       //   todoLists: [
       //     ...state.todoLists,
-      //     action.payload 
+      //     action.payload
       //   ]
       // };
-      state.todoLists.push( action.payload )
+      state.todoLists.push(action.payload);
     },
     deleteTodoList: (state, action) => {
       return {
         todoLists: state.todoLists.filter(item => {
-          return item.id !== action.payload.id;
+          return item.id !== action.payload;
         })
       };
     },
@@ -35,7 +38,14 @@ export const todosFeature = createSlice({
       return {
         todoLists: state.todoLists.map((item, i) => {
           if (action.payload.id === item.id) {
-            return { title: item.title, id: item.id, TodoItems: [...item.TodoItems, { title: action.payload.title, id: Date.now(), done: false }] }
+            return {
+              title: item.title,
+              id: item.id,
+              TodoItems: [
+                ...item.TodoItems,
+                { title: action.payload.title, id: Date.now(), done: false }
+              ]
+            };
           } else {
             return item;
           }
@@ -44,13 +54,15 @@ export const todosFeature = createSlice({
     },
     deleteTodoItem: (state, action) => {
       return {
-        todoLists: state.todoLists.map((item) => {
+        todoLists: state.todoLists.map(item => {
           if (action.payload.id === item.id) {
             return {
               title: item.title,
               id: item.id,
-              TodoItems: item.TodoItems.filter((member) => member.id !== action.payload.todo_id)
-            }
+              TodoItems: item.TodoItems.filter(
+                member => member.id !== action.payload.todo_id
+              )
+            };
           } else {
             return item;
           }
@@ -59,13 +71,17 @@ export const todosFeature = createSlice({
     },
     todoItemCompleted: (state, action) => {
       return {
-        todoLists: state.todoLists.map((item) => {
+        todoLists: state.todoLists.map(item => {
           if (action.payload.id === item.id) {
-            return ({
+            return {
               title: item.title,
               id: item.id,
-              TodoItems: item.TodoItems.map((member) => member.id === action.payload.todo_id ? { title: member.title, id: member.id, done: !member.done } : member)
-            });
+              TodoItems: item.TodoItems.map(member =>
+                member.id === action.payload.todo_id
+                  ? { title: member.title, id: member.id, done: !member.done }
+                  : member
+              )
+            };
           } else {
             return item;
           }
@@ -89,14 +105,29 @@ export const todosFeature = createSlice({
       state.loading = true;
       state.errors = [];
     },
-  },
+    deleteTodoListRequest: (state, action) => {
+      state.loading = true;
+      state.errors = [];
+    }
+  }
 });
 
-export const { createTodoList, deleteTodoList, addTodoItem, deleteTodoItem, todoItemCompleted, fetchTodosRequest, fetchProjectsSuccess, fetchProjectsFail, postTodoListRequest } = todosFeature.actions;
+export const {
+  createTodoList,
+  deleteTodoList,
+  addTodoItem,
+  deleteTodoItem,
+  todoItemCompleted,
+  fetchTodosRequest,
+  fetchProjectsSuccess,
+  fetchProjectsFail,
+  postTodoListRequest,
+  deleteTodoListRequest
+} = todosFeature.actions;
 
 const reducer = {
-  todos: todosFeature.reducer,
-}
+  todos: todosFeature.reducer
+};
 
 // export const apiFeature = createSlice({
 //   name: 'Api',
@@ -128,14 +159,11 @@ const reducer = {
 //   },
 // });
 
-
-
 function* fetchTodosWorker(actions) {
   try {
     const payload = yield call(api.todos.getAll, actions.payload);
- 
-    yield put(fetchProjectsSuccess(payload));
 
+    yield put(fetchProjectsSuccess(payload));
   } catch (e) {
     yield put(fetchProjectsFail(e.message));
   }
@@ -143,16 +171,22 @@ function* fetchTodosWorker(actions) {
 
 function* postTodoListWorker(actions) {
   try {
-
     const payload = yield call(api.todos.createTodoList, actions.payload);
-    
-    yield put(createTodoList(payload));
 
+    yield put(createTodoList(payload));
   } catch (e) {
     yield put(fetchProjectsFail(e.message));
   }
 }
+function* deleteTodoListWorker(actions) {
+  try {
+    yield call(api.todos.deleteTodoList, actions.payload.id);
 
+    yield put(deleteTodoList(actions.payload.id));
+  } catch (e) {
+    yield put(fetchProjectsFail(e.message));
+  }
+}
 
 // function* postProjectsWorker(actions) {
 //   try {
@@ -181,15 +215,12 @@ function* postTodoListWorker(actions) {
 
 export function* requestTodosWatcher() {
   yield takeEvery(fetchTodosRequest().type, fetchTodosWorker);
- 
-}
-export function* postRequestTodosWatcher() {
-  yield takeEvery(postTodoListRequest().type, postTodoListWorker);;
- 
+  yield takeEvery(postTodoListRequest().type, postTodoListWorker);
+  yield takeEvery(deleteTodoListRequest().type, deleteTodoListWorker);
 }
 
 function* rootSaga() {
-  yield all([requestTodosWatcher(), postRequestTodosWatcher()]);
+  yield all([requestTodosWatcher()]);
 }
 
 const initialiseSagaMiddleware = createSagaMiddleware();
@@ -201,7 +232,7 @@ if (process.env.NODE_ENV === `development`) {
 const store = configureStore({
   reducer,
   middleware,
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== "production"
 });
 
 initialiseSagaMiddleware.run(rootSaga);
