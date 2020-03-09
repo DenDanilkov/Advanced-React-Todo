@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {createTodoList} from '../../store/store'
+import {postTodoListRequest} from '../../store/store'
 
 export default function InsertTodoList(props) {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function InsertTodoList(props) {
         <button className='waves-effect waves-light btn col s2 center-align'
         onClick={(e) => {
           e.preventDefault();
-         dispatch(createTodoList({ title: name }));
+         dispatch(postTodoListRequest({ title: name }));
         }}
         > Add!
         </button>

@@ -9,7 +9,7 @@ const httpClient = baseURL => {
 
     },
     post: async (path, params) => {
-      const res = await axios.post(`${baseURL}${path}`, { params });
+      const res = await axios.post(`${baseURL}${path}`, params);
       return res.data;
     },
     put: async (path, params) => {

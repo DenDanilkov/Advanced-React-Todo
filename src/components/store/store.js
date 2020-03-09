@@ -15,12 +15,14 @@ export const todosFeature = createSlice({
   },
   reducers: {
     createTodoList: (state, action) => {
-      return {
-        todoLists: [
-          ...state.todoLists,
-          { title: action.payload.title, id: Date.now(), TodoItems: [] }
-        ]
-      };
+      // console.log('acaascas',action.payload)
+      // return {
+      //   todoLists: [
+      //     ...state.todoLists,
+      //     action.payload 
+      //   ]
+      // };
+      state.todoLists.push( action.payload )
     },
     deleteTodoList: (state, action) => {
       return {
@@ -81,12 +83,16 @@ export const todosFeature = createSlice({
     },
     fetchProjectsFail: (state, action) => {
       state.loading = false;
-      state.errors.push(action);
+      /*state.errors.push(action);*/
+    },
+    postTodoListRequest: (state, action) => {
+      state.loading = true;
+      state.errors = [];
     },
   },
 });
 
-export const { createTodoList, deleteTodoList, addTodoItem, deleteTodoItem, todoItemCompleted, fetchTodosRequest, fetchProjectsSuccess, fetchProjectsFail} = todosFeature.actions;
+export const { createTodoList, deleteTodoList, addTodoItem, deleteTodoItem, todoItemCompleted, fetchTodosRequest, fetchProjectsSuccess, fetchProjectsFail, postTodoListRequest } = todosFeature.actions;
 
 const reducer = {
   todos: todosFeature.reducer,
@@ -127,45 +133,63 @@ const reducer = {
 function* fetchTodosWorker(actions) {
   try {
     const payload = yield call(api.todos.getAll, actions.payload);
+ 
     yield put(fetchProjectsSuccess(payload));
-  
+
   } catch (e) {
     yield put(fetchProjectsFail(e.message));
   }
 }
 
-function* postProjectsWorker(actions) {
+function* postTodoListWorker(actions) {
   try {
 
-    yield call(
-      axios
-        .post('http://localhost:3000/api/projects', {
-          projectName: actions.payload.name,
-          description: actions.payload.description,
-          projectCreator: 'bla',
-        })
-        .then(data => {
-          console.log('axios', data);
+    const payload = yield call(api.todos.createTodoList, actions.payload);
+    
+    yield put(createTodoList(payload));
 
-          updateProjectsList(data.data);
-        })
-        .catch(error => {
-          console.log('err', error);
-        })
-    );
-    yield put(fetchProjectsSuccess(actions.payload));
   } catch (e) {
     yield put(fetchProjectsFail(e.message));
   }
 }
+
+
+// function* postProjectsWorker(actions) {
+//   try {
+
+//     yield call(
+//       axios
+//         .post('http://localhost:3000/api/projects', {
+//           projectName: actions.payload.name,
+//           description: actions.payload.description,
+//           projectCreator: 'bla',
+//         })
+//         .then(data => {
+//           console.log('axios', data);
+
+//           updateProjectsList(data.data);
+//         })
+//         .catch(error => {
+//           console.log('err', error);
+//         })
+//     );
+//     yield put(fetchProjectsSuccess(actions.payload));
+//   } catch (e) {
+//     yield put(fetchProjectsFail(e.message));
+//   }
+// }
 
 export function* requestTodosWatcher() {
   yield takeEvery(fetchTodosRequest().type, fetchTodosWorker);
-  /*yield takeEvery(postProjects().type, postProjectsWorker);*/
+ 
+}
+export function* postRequestTodosWatcher() {
+  yield takeEvery(postTodoListRequest().type, postTodoListWorker);;
+ 
 }
 
 function* rootSaga() {
-  yield all([requestTodosWatcher()]);
+  yield all([requestTodosWatcher(), postRequestTodosWatcher()]);
 }
 
 const initialiseSagaMiddleware = createSagaMiddleware();

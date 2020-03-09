@@ -9,7 +9,12 @@ router.get('/', async function(req, res, next) {
 });
 router.post('/', async function(req, res, next) {
   const newItem = req.body
-  const databaseResponse = await database.TodoList.create(newItem)
+  
+  const databaseResponse = await database.TodoList.create(newItem, {
+    include: [{
+      model: database.TodoItem,
+      as: 'TodoItems'
+    }]}).then((newCreatedTodoList) => newCreatedTodoList.reload())
   return res.status(201).json(databaseResponse)
 })
 
