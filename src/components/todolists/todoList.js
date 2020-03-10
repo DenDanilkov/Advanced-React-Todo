@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   deleteTodoListRequest,
-  deleteTodoItem,
+  deleteTodoItemRequest,
   todoItemCompleted,
   postTodoItemRequest
 } from "../store/store";
@@ -60,10 +60,10 @@ export default function TodoList(props) {
                     <span className='col s6 row'><button className='btn-floating btn-small red '
                       onClick={() => {
                         dispatch(
-                          deleteTodoItem({
-                            id: props.id,
-                            todo_id: item.id
-                          })
+                          deleteTodoItemRequest([
+                            props.id,
+                            item.id
+                          ])
                         );
                       }}
                     >

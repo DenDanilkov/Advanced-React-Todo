@@ -55,12 +55,12 @@ export const todosFeature = createSlice({
     deleteTodoItem: (state, action) => {
       return {
         todoLists: state.todoLists.map(item => {
-          if (action.payload.id === item.id) {
+          if (action.payload[0] === item.id) {
             return {
               title: item.title,
               id: item.id,
               TodoItems: item.TodoItems.filter(
-                member => member.id !== action.payload.todo_id
+                member => member.id !== action.payload[1]
               )
             };
           } else {
@@ -112,6 +112,10 @@ export const todosFeature = createSlice({
     postTodoItemRequest: (state, action) => {
       state.loading = true;
       state.errors = [];
+    },
+    deleteTodoItemRequest: (state, action) => {
+      state.loading = true;
+      state.errors = [];
     }
   }
 });
@@ -127,7 +131,8 @@ export const {
   fetchProjectsFail,
   postTodoListRequest,
   deleteTodoListRequest,
-  postTodoItemRequest
+  postTodoItemRequest,
+  deleteTodoItemRequest
 } = todosFeature.actions;
 
 const reducer = {
@@ -203,6 +208,15 @@ function* postTodoItemWorker(actions) {
     yield put(fetchProjectsFail(e.message));
   }
 }
+function* deleteTodoItemWorker(actions) {
+  try {
+   yield call(api.todos.deleteTodoItem, actions.payload);
+
+    yield put(deleteTodoItem(actions.payload));
+  } catch (e) {
+    yield put(fetchProjectsFail(e.message));
+  }
+}
 
 // function* postProjectsWorker(actions) {
 //   try {
@@ -234,6 +248,7 @@ export function* requestTodosWatcher() {
   yield takeEvery(postTodoListRequest().type, postTodoListWorker);
   yield takeEvery(deleteTodoListRequest().type, deleteTodoListWorker);
   yield takeEvery(postTodoItemRequest().type, postTodoItemWorker);
+  yield takeEvery(deleteTodoItemRequest().type, deleteTodoItemWorker);
 }
 
 function* rootSaga() {
