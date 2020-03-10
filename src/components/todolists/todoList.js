@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import  './todoList.scss'
+import classnames from 'classnames' 
 
 import {
   deleteTodoListRequest,
@@ -55,9 +57,14 @@ export default function TodoList(props) {
                 }
               }, [])
               .map(item => {
+                const liClasses = classnames({
+                  'done': item.done,
+                  'col': true,
+                  's6': true
+                });
                 return (
                   <li className='collection-item row' key={item.id}>
-                    <span className='col s6'>{item.title}</span>
+                    <span className={liClasses}>{item.title}</span>
                     <span className='col s6 row'><button className='btn-floating btn-small red '
                       onClick={() => {
                         dispatch(

@@ -70,10 +70,14 @@
 //     background: rgb(172, 26, 26);
 //   }
 
-  .TodoList {
-      border: 1px solid blue;
-      display: flex;
-      margin-left: 20px;
-      margin-bottom: 20px;
+  // .TodoList {
+  //     border: 1px solid blue;
+  //     display: flex;
+  //     margin-left: 20px;
+  //     margin-bottom: 20px;
+  // }
+
+  .done {
+    text-decoration: line-through
   }
   
