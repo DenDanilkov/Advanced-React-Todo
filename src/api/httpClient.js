@@ -13,7 +13,7 @@ const httpClient = baseURL => {
       return res.data;
     },
     put: async (path, params) => {
-      const res = await axios.put(`${baseURL}${path}`, { params });
+      const res = await axios.put(`${baseURL}${path}`, params);
       return res.data;
     },
     delete: async (path, params) => {

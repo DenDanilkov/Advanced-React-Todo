@@ -15,7 +15,7 @@ export default http => {
     createTodoItem: ([todoListId, todoItem]) => {
       return http.post(`todoLists/${todoListId}/todo`, todoItem);
     },
-    updateTodoItem: (todoListId, todoId, update) => {
+    updateTodoItem: ([todoListId, todoId, update]) => {
       return http.put(`todoLists/${todoListId}/todo/${todoId}`, update);
     },
     deleteTodoItem: ([todoListId, todoId]) => {

@@ -23,7 +23,7 @@ router.post('/:todoListId/todo', async function(req, res, next) {
   const todoList = req.params.todoListId;
   const newItem = req.body
   console.log('ASFEW',newItem)
-  const databaseResponse = await database.TodoItem.create({...newItem, todoId:req.params.todoListId})
+  const databaseResponse = await database.TodoItem.create({...newItem, todoId:req.params.todoListId, done: false})
   return res.status(201).json(databaseResponse)
 })
 
@@ -37,6 +37,7 @@ router.delete('/:todoListId/todo/:todoId', async function(req, res, next) {
 router.put('/:todoListId/todo/:todoId', async function(req, res, next) {
   const todoListOfTodo = req.params.todoListId;
   const itemModified = req.params.todoId
+  console.log('FFFF', req.body)
   const databaseResponse = await database.TodoItem.update({ ...req.body}, {where: {id: itemModified, todoId: todoListOfTodo}})
   return res.status(204).json(databaseResponse)
 })

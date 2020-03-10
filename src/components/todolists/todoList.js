@@ -5,7 +5,8 @@ import {
   deleteTodoListRequest,
   deleteTodoItemRequest,
   todoItemCompleted,
-  postTodoItemRequest
+  postTodoItemRequest,
+  updateTodoItemRequest
 } from "../store/store";
 
 export default function TodoList(props) {
@@ -74,10 +75,11 @@ export default function TodoList(props) {
                         <label>
                           <input type="checkbox" checked={item.done} onChange={() => {
                             dispatch(
-                              todoItemCompleted({
-                                id: props.id,
-                                todo_id: item.id
-                              })
+                              updateTodoItemRequest([
+                                props.id,
+                                item.id,
+                              { done: !item.done}
+                              ])
                             );
                           }} />
                           <span class="lever"></span>

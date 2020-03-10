@@ -72,13 +72,13 @@ export const todosFeature = createSlice({
     todoItemCompleted: (state, action) => {
       return {
         todoLists: state.todoLists.map(item => {
-          if (action.payload.id === item.id) {
+          if (action.payload[0] === item.id) {
             return {
               title: item.title,
               id: item.id,
               TodoItems: item.TodoItems.map(member =>
-                member.id === action.payload.todo_id
-                  ? { title: member.title, id: member.id, done: !member.done }
+                member.id === action.payload[1]
+                  ? { title: member.title, id: member.id, done: action.payload[2].done }
                   : member
               )
             };
@@ -116,6 +116,10 @@ export const todosFeature = createSlice({
     deleteTodoItemRequest: (state, action) => {
       state.loading = true;
       state.errors = [];
+    },
+    updateTodoItemRequest: (state, action) => {
+      state.loading = true;
+      state.errors = [];
     }
   }
 });
@@ -132,7 +136,8 @@ export const {
   postTodoListRequest,
   deleteTodoListRequest,
   postTodoItemRequest,
-  deleteTodoItemRequest
+  deleteTodoItemRequest,
+  updateTodoItemRequest
 } = todosFeature.actions;
 
 const reducer = {
@@ -217,6 +222,15 @@ function* deleteTodoItemWorker(actions) {
     yield put(fetchProjectsFail(e.message));
   }
 }
+function* updateTodoItemWorker(actions) {
+  try {
+   yield call(api.todos.updateTodoItem, actions.payload);
+
+    yield put(todoItemCompleted(actions.payload));
+  } catch (e) {
+    yield put(fetchProjectsFail(e.message));
+  }
+}
 
 // function* postProjectsWorker(actions) {
 //   try {
@@ -249,6 +263,7 @@ export function* requestTodosWatcher() {
   yield takeEvery(deleteTodoListRequest().type, deleteTodoListWorker);
   yield takeEvery(postTodoItemRequest().type, postTodoItemWorker);
   yield takeEvery(deleteTodoItemRequest().type, deleteTodoItemWorker);
+  yield takeEvery(updateTodoItemRequest().type, updateTodoItemWorker);
 }
 
 function* rootSaga() {
