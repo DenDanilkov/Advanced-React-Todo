@@ -18,13 +18,6 @@ export const todosFeature = createSlice({
   },
   reducers: {
     createTodoList: (state, action) => {
-      // console.log('acaascas',action.payload)
-      // return {
-      //   todoLists: [
-      //     ...state.todoLists,
-      //     action.payload
-      //   ]
-      // };
       state.todoLists.push(action.payload);
     },
     deleteTodoList: (state, action) => {
@@ -144,36 +137,6 @@ const reducer = {
   todos: todosFeature.reducer
 };
 
-// export const apiFeature = createSlice({
-//   name: 'Api',
-//   initialState: {
-//     loading: false,
-//     list: [],
-//     errors: [],
-//   },
-//   reducers: {
-//     fetchProjectsRequest: state => {
-//       state.loading = true;
-//       state.errors = [];
-//     },
-//     fetchProjectsSuccess: (state, action) => {
-//       state.loading = false;
-//       state.list = action.payload;
-//       state.errors = [];
-//     },
-//     fetchProjectsFail: (state, action) => {
-//       state.loading = false;
-//       state.errors.push(action);
-//     },
-//     postProjects: state => {
-//       state.loading = true;
-//     },
-//     updateProjectsList: (state, action) => {
-//       state.list.push(action.payload);
-//     },
-//   },
-// });
-
 function* fetchTodosWorker(actions) {
   try {
     const payload = yield call(api.todos.getAll, actions.payload);
@@ -231,31 +194,6 @@ function* updateTodoItemWorker(actions) {
     yield put(fetchProjectsFail(e.message));
   }
 }
-
-// function* postProjectsWorker(actions) {
-//   try {
-
-//     yield call(
-//       axios
-//         .post('http://localhost:3000/api/projects', {
-//           projectName: actions.payload.name,
-//           description: actions.payload.description,
-//           projectCreator: 'bla',
-//         })
-//         .then(data => {
-//           console.log('axios', data);
-
-//           updateProjectsList(data.data);
-//         })
-//         .catch(error => {
-//           console.log('err', error);
-//         })
-//     );
-//     yield put(fetchProjectsSuccess(actions.payload));
-//   } catch (e) {
-//     yield put(fetchProjectsFail(e.message));
-//   }
-// }
 
 export function* requestTodosWatcher() {
   yield takeEvery(fetchTodosRequest().type, fetchTodosWorker);
