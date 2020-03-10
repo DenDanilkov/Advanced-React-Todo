@@ -37,13 +37,13 @@ export const todosFeature = createSlice({
     addTodoItem: (state, action) => {
       return {
         todoLists: state.todoLists.map((item, i) => {
-          if (action.payload.id === item.id) {
+          if (action.payload.todoId === item.id) {
             return {
               title: item.title,
               id: item.id,
               TodoItems: [
                 ...item.TodoItems,
-                { title: action.payload.title, id: Date.now(), done: false }
+                action.payload
               ]
             };
           } else {
@@ -108,6 +108,10 @@ export const todosFeature = createSlice({
     deleteTodoListRequest: (state, action) => {
       state.loading = true;
       state.errors = [];
+    },
+    postTodoItemRequest: (state, action) => {
+      state.loading = true;
+      state.errors = [];
     }
   }
 });
@@ -122,7 +126,8 @@ export const {
   fetchProjectsSuccess,
   fetchProjectsFail,
   postTodoListRequest,
-  deleteTodoListRequest
+  deleteTodoListRequest,
+  postTodoItemRequest
 } = todosFeature.actions;
 
 const reducer = {
@@ -178,11 +183,22 @@ function* postTodoListWorker(actions) {
     yield put(fetchProjectsFail(e.message));
   }
 }
+
 function* deleteTodoListWorker(actions) {
   try {
     yield call(api.todos.deleteTodoList, actions.payload.id);
 
     yield put(deleteTodoList(actions.payload.id));
+  } catch (e) {
+    yield put(fetchProjectsFail(e.message));
+  }
+}
+
+function* postTodoItemWorker(actions) {
+  try {
+    const payload = yield call(api.todos.createTodoItem, actions.payload);
+
+    yield put(addTodoItem(payload));
   } catch (e) {
     yield put(fetchProjectsFail(e.message));
   }
@@ -217,6 +233,7 @@ export function* requestTodosWatcher() {
   yield takeEvery(fetchTodosRequest().type, fetchTodosWorker);
   yield takeEvery(postTodoListRequest().type, postTodoListWorker);
   yield takeEvery(deleteTodoListRequest().type, deleteTodoListWorker);
+  yield takeEvery(postTodoItemRequest().type, postTodoItemWorker);
 }
 
 function* rootSaga() {

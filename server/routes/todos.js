@@ -7,6 +7,7 @@ router.get('/', async function(req, res, next) {
   include: 'TodoItems'})
   return res.status(200).json(databaseResponse)
 });
+
 router.post('/', async function(req, res, next) {
   const newItem = req.body
   
@@ -21,6 +22,7 @@ router.post('/', async function(req, res, next) {
 router.post('/:todoListId/todo', async function(req, res, next) {
   const todoList = req.params.todoListId;
   const newItem = req.body
+  console.log('ASFEW',newItem)
   const databaseResponse = await database.TodoItem.create({...newItem, todoId:req.params.todoListId})
   return res.status(201).json(databaseResponse)
 })

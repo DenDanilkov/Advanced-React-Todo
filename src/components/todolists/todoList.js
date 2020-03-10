@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   deleteTodoListRequest,
-  addTodoItem,
   deleteTodoItem,
-  todoItemCompleted
+  todoItemCompleted,
+  postTodoItemRequest
 } from "../store/store";
 
 export default function TodoList(props) {
@@ -27,7 +27,7 @@ export default function TodoList(props) {
               <button className='btn-floating  btn-small teal'
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch(addTodoItem({ id: props.id, title: todo }));
+                  dispatch(postTodoItemRequest([ props.id, {title: todo} ]));
                 }}
               > <i class="material-icons">add</i>
               </button>
