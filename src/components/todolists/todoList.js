@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./todoList.scss";
-import classnames from "classnames";
-
 import {
   deleteTodoListRequest,
-  deleteTodoItemRequest,
-  todoItemCompleted,
   postTodoItemRequest,
-  updateTodoItemRequest,
 } from "../store/store";
+import { Todo } from "../todos/todo";
 
 export default function TodoList(props) {
   const [todo, setTodo] = useState("");
@@ -41,7 +37,6 @@ export default function TodoList(props) {
                   dispatch(postTodoItemRequest([props.id, { title: todo }]));
                 }}
               >
-                {" "}
                 <i class="material-icons">add</i>
               </button>
               <button
@@ -64,47 +59,15 @@ export default function TodoList(props) {
                   return acc;
                 }
               }, [])
-              .map((item) => {
-                const liClasses = classnames({
-                  done: item.done,
-                  col: true,
-                  s6: true,
-                });
-                return (
-                  <li className="collection-item row" key={item.id}>
-                    <span className={liClasses}>{item.title}</span>
-                    <span className="col s6 row">
-                      <button
-                        className="btn-floating btn-small red "
-                        onClick={() => {
-                          dispatch(deleteTodoItemRequest([props.id, item.id]));
-                        }}
-                      >
-                        <i class="material-icons">delete</i>
-                      </button>
-
-                      <span class="switch offset-s1">
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={item.done}
-                            onChange={() => {
-                              dispatch(
-                                updateTodoItemRequest([
-                                  props.id,
-                                  item.id,
-                                  { done: !item.done },
-                                ])
-                              );
-                            }}
-                          />
-                          <span class="lever"></span>
-                        </label>
-                      </span>
-                    </span>
-                  </li>
-                );
-              })}
+              .map(({ done, id, title }) => (
+                <Todo
+                  done={done}
+                  id={id}
+                  title={title}
+                  todolistId={props.id}
+                  key={id}
+                />
+              ))}
           </ul>
         </div>
       </div>
