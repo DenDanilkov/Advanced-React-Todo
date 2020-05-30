@@ -14,9 +14,9 @@ export default function TodoList(props) {
   const title = todos.todoLists.filter((item) => item.id === props.id)[0].title;
   return (
     <div className="col m3 ">
-      <div class="card">
-        <span class="card-title">{title}</span>
-        <div class="card-content">
+      <div class="card medium">
+      <div class="card-content">
+      <span class="card-title">{title}</span>
           <div className="row valign-wrapper">
             <div className="input-field col s8">
               <input
